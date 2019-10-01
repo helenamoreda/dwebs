@@ -17,8 +17,15 @@ public class ProcesadorWeb {
 	private URLConnection urlConexion;
 	private String tipoContenido;
 	private int metaetiquetas;
+	private int hiperenlaces;
+	private int listas;
+	private int tablas;
 
 	ProcesadorWeb() {
+		this.metaetiquetas = 0;
+		this.hiperenlaces = 0;
+		this.listas = 0;
+		this.tablas = 0;
 	}
 
 	public void pedirDatos() {
@@ -44,8 +51,8 @@ public class ProcesadorWeb {
 
 				String line;
 				while ((line = input.readLine()) != null) {
-					if (line.equals("<meta")) {
-
+					if (line.contains("<meta")) {
+						
 					}
 				}
 				// Cierre
