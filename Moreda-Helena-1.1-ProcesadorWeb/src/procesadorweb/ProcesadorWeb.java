@@ -10,14 +10,15 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Scanner;
 
-public class Ejercicio {
+public class ProcesadorWeb {
 	private String cadena;
 	private URL url;
 	private InetAddress address;
 	private URLConnection urlConexion;
 	private String tipoContenido;
+	private int metaetiquetas;
 
-	Ejercicio() {
+	ProcesadorWeb() {
 	}
 
 	public void pedirDatos() {
@@ -40,17 +41,18 @@ public class Ejercicio {
 			if (tipoContenido.equals("text/html")) {
 				InputStream inputstream = urlConexion.getInputStream();
 				BufferedReader input = new BufferedReader(new InputStreamReader(inputstream));
-				
+
 				String line;
 				while ((line = input.readLine()) != null) {
-					// if(line.equals("")
+					if (line.equals("<meta")) {
+
+					}
 				}
 				// Cierre
 				inputstream.close();
 				input.close();
 				this.visualizarDatosContenido();
 			}
-
 
 		} catch (MalformedURLException e) {
 			System.out.println("Dirección no válida");
@@ -65,7 +67,7 @@ public class Ejercicio {
 		System.out.println("Número de listas: ");
 		System.out.println("Número de tablas: ");
 	}
-	
+
 	public void visualizarDatos() {
 		System.out.println("Dirección URL: " + this.url.toString());
 		System.out.println("Dirección IP: " + this.address.getHostAddress());
@@ -75,9 +77,9 @@ public class Ejercicio {
 	}
 
 	public static void main(String[] args) {
-		Ejercicio e = new Ejercicio();
-		e.pedirDatos();
-		e.analizar();
+		ProcesadorWeb pw = new ProcesadorWeb();
+		pw.pedirDatos();
+		pw.analizar();
 	}
 
 }
