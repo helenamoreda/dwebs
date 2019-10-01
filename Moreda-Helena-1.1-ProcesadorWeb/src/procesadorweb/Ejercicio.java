@@ -53,25 +53,25 @@ public class Ejercicio {
 
 
 		} catch (MalformedURLException e) {
-			System.out.println("Direcci髇 no v醠ida");
+			System.out.println("Direcci贸n no v谩lida");
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
 	}
 
 	public void visualizarDatosContenido() {
-		System.out.println("N鷐ero de metaetiquetas: ");
-		System.out.println("N鷐ero de hiperenlaces: ");
-		System.out.println("N鷐ero de listas: ");
-		System.out.println("N鷐ero de tablas: ");
+		System.out.println("N煤mero de metaetiquetas: ");
+		System.out.println("N煤mero de hiperenlaces: ");
+		System.out.println("N煤mero de listas: ");
+		System.out.println("N煤mero de tablas: ");
 	}
 	
 	public void visualizarDatos() {
-		System.out.println("Direcci髇 URL: " + this.url.toString());
-		System.out.println("Direcci髇 IP: " + this.address.getHostAddress());
+		System.out.println("Direcci贸n URL: " + this.url.toString());
+		System.out.println("Direcci贸n IP: " + this.address.getHostAddress());
 		System.out.println("Puerto: " + this.url.getDefaultPort());
 		System.out.println("Tipo de contenido: " + this.tipoContenido);
-		System.out.println("Codificaci髇 de caracteres: " + this.urlConexion.getContentType().split(";")[1]);
+		System.out.println("Codificaci贸n de caracteres: " + this.urlConexion.getContentType().split(";")[1]);
 	}
 
 	public static void main(String[] args) {
