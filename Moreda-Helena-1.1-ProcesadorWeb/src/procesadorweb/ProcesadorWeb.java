@@ -8,6 +8,8 @@ import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ProcesadorWeb {
@@ -16,16 +18,15 @@ public class ProcesadorWeb {
 	private InetAddress address;
 	private URLConnection urlConexion;
 	private String tipoContenido;
-	private int metaetiquetas;
-	private int hiperenlaces;
-	private int listas;
-	private int tablas;
+	private HashMap<String,Integer> etiquetas;
 
 	ProcesadorWeb() {
-		this.metaetiquetas = 0;
-		this.hiperenlaces = 0;
-		this.listas = 0;
-		this.tablas = 0;
+		etiquetas = new HashMap<String,Integer>();
+		etiquetas.put("<meta",0);
+		etiquetas.put("<a",0);
+		etiquetas.put("<ul",0);
+		etiquetas.put("<ol",0);
+		etiquetas.put("<table",0);
 	}
 
 	public void pedirDatos() {
@@ -51,8 +52,9 @@ public class ProcesadorWeb {
 
 				String line;
 				while ((line = input.readLine()) != null) {
-					if (line.contains("<meta")) {
-						
+					for (Map.Entry<String, Integer> entry : etiquetas.entrySet()) {
+						String key = entry.getKey();
+					    Integer value = entry.getValue();
 					}
 				}
 				// Cierre
@@ -69,7 +71,7 @@ public class ProcesadorWeb {
 	}
 
 	public void visualizarDatosContenido() {
-		System.out.println("Número de metaetiquetas: ");
+		System.out.println("Número de metaetiquetas: " );
 		System.out.println("Número de hiperenlaces: ");
 		System.out.println("Número de listas: ");
 		System.out.println("Número de tablas: ");
