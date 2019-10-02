@@ -53,6 +53,10 @@ public class ProcesadorWeb {
 				String line;
 				while ((line = input.readLine()) != null) {
 					for (Map.Entry<String, Integer> entry : etiquetas.entrySet()) {
+						String[] linea = line.split("(?=<meta)");
+						for (String string : linea) {
+
+						}
 						String key = entry.getKey();
 					    Integer value = entry.getValue();
 					}
