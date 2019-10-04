@@ -13,25 +13,25 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class ProcesadorWeb {
-	private String cadena;
+	private String cadena, tipoContenido;
 	private URL url;
 	private InetAddress address;
 	private URLConnection urlConexion;
-	private String tipoContenido;
-	private HashMap<String,Integer> etiquetas;
+	private HashMap<String, Integer> etiquetas;
 
 	ProcesadorWeb() {
-		etiquetas = new HashMap<String,Integer>();
-		etiquetas.put("<meta",0);
-		etiquetas.put("<a",0);
-		etiquetas.put("<ul",0);
-		etiquetas.put("<ol",0);
-		etiquetas.put("<table",0);
+		etiquetas = new HashMap<>();
+		etiquetas.put("<meta", 0);
+		etiquetas.put("<a", 0);
+		etiquetas.put("<ul", 0);
+		etiquetas.put("<ol", 0);
+		etiquetas.put("<table", 0);
+		this.tipoContenido = "";
+		this.cadena = "";
 	}
 
 	public void pedirDatos() {
 		Scanner sc = new Scanner(System.in);
-
 		System.out.println("Por favor, introduzca url/uri a analizar: ");
 		this.cadena = sc.nextLine();
 		sc.close();
@@ -46,24 +46,31 @@ public class ProcesadorWeb {
 
 			this.visualizarDatos();
 
+			// Buscamos las etiquetas solo en el caso de ser una página HTML 
 			if (tipoContenido.equals("text/html")) {
 				InputStream inputstream = urlConexion.getInputStream();
 				BufferedReader input = new BufferedReader(new InputStreamReader(inputstream));
 
 				String line;
+				// Recorro línea a línea el contenido HTML de la url
 				while ((line = input.readLine()) != null) {
+					// Recorro el map de todas las etiquetas para buscar coincidencias en la línea
 					for (Map.Entry<String, Integer> entry : etiquetas.entrySet()) {
-						String[] linea = line.split("(?=<meta)");
-						for (String string : linea) {
-
+						// Genero un array donde cada posición incluye la etiqueta (usando expresión regular) que estamos recorriendo en caso de coincidencia
+						String[] array = line.split("(?<="+entry.getKey()+")");
+						// Recorremos el array anterior para ver si cada posición contiene la etiqueta que estamos recorriendo
+						for (String linea : array) {
+							if (linea.contains(entry.getKey())) {
+								// Si la etiqueta está incluida sumamos uno al contador
+								entry.setValue(entry.getValue() + 1);
+							}
 						}
-						String key = entry.getKey();
-					    Integer value = entry.getValue();
 					}
 				}
 				// Cierre
 				inputstream.close();
 				input.close();
+				// Pintamos el resultado
 				this.visualizarDatosContenido();
 			}
 
@@ -75,10 +82,10 @@ public class ProcesadorWeb {
 	}
 
 	public void visualizarDatosContenido() {
-		System.out.println("Número de metaetiquetas: " );
-		System.out.println("Número de hiperenlaces: ");
-		System.out.println("Número de listas: ");
-		System.out.println("Número de tablas: ");
+		System.out.println("Número de metaetiquetas: " + etiquetas.get("<meta"));
+		System.out.println("Número de hiperenlaces: " + etiquetas.get("<a"));
+		System.out.println("Número de listas: " + (etiquetas.get("<ol") + etiquetas.get("<ul")));
+		System.out.println("Número de tablas: " + etiquetas.get("<table"));
 	}
 
 	public void visualizarDatos() {
@@ -86,13 +93,60 @@ public class ProcesadorWeb {
 		System.out.println("Dirección IP: " + this.address.getHostAddress());
 		System.out.println("Puerto: " + this.url.getDefaultPort());
 		System.out.println("Tipo de contenido: " + this.tipoContenido);
-		System.out.println("Codificación de caracteres: " + this.urlConexion.getContentType().split(";")[1]);
+		System.out.println("Codificación de caracteres:" + this.urlConexion.getContentType().split(";")[1]);
 	}
-
+	
 	public static void main(String[] args) {
 		ProcesadorWeb pw = new ProcesadorWeb();
 		pw.pedirDatos();
 		pw.analizar();
 	}
 
+	public String getCadena() {
+		return cadena;
+	}
+
+	public void setCadena(String cadena) {
+		this.cadena = cadena;
+	}
+
+	public URL getUrl() {
+		return url;
+	}
+
+	public void setUrl(URL url) {
+		this.url = url;
+	}
+
+	public InetAddress getAddress() {
+		return address;
+	}
+
+	public void setAddress(InetAddress address) {
+		this.address = address;
+	}
+
+	public URLConnection getUrlConexion() {
+		return urlConexion;
+	}
+
+	public void setUrlConexion(URLConnection urlConexion) {
+		this.urlConexion = urlConexion;
+	}
+
+	public String getTipoContenido() {
+		return tipoContenido;
+	}
+
+	public void setTipoContenido(String tipoContenido) {
+		this.tipoContenido = tipoContenido;
+	}
+
+	public HashMap<String, Integer> getEtiquetas() {
+		return etiquetas;
+	}
+
+	public void setEtiquetas(HashMap<String, Integer> etiquetas) {
+		this.etiquetas = etiquetas;
+	}
 }
