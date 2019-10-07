@@ -1,6 +1,7 @@
 package procesadorweb;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -38,6 +39,10 @@ public class ProcesadorWeb {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Por favor, introduzca url/uri a analizar: ");
 		this.cadena = sc.nextLine();
+		// Si no incluye el protocolo, se lo añadimos
+		if (!cadena.startsWith("http")) {
+			this.cadena = "http://" + cadena;
+		}
 		sc.close();
 	}
 
@@ -50,8 +55,10 @@ public class ProcesadorWeb {
 			this.address = InetAddress.getByName(this.url.getHost());
 			this.urlConexion = url.openConnection();
 			this.tipoContenido = this.urlConexion.getContentType().split(";")[0];
+			
+			// si la url no comienza por http, se lo añadimos
 			if (this.urlConexion.getContentType().split(";").length > 1) {
-				this.encoding = this.urlConexion.getContentType().split(";")[1];
+				this.encoding = this.urlConexion.getContentType().split(";")[1].split("charset=")[1];
 			}
 
 			this.visualizarDatos();
@@ -87,6 +94,8 @@ public class ProcesadorWeb {
 			// excepción en caso de url mal formada
 		} catch (MalformedURLException e) {
 			System.out.println("Dirección no válida");
+		} catch (FileNotFoundException e) {
+			System.out.println(e.getMessage());
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
@@ -104,11 +113,11 @@ public class ProcesadorWeb {
 		System.out.println("Dirección IP: " + this.address.getHostAddress());
 		System.out.println("Puerto: " + this.url.getDefaultPort());
 		System.out.println("Tipo de contenido: " + this.tipoContenido);
-		System.out.println("Codificación de caracteres:" + this.encoding);
+		System.out.println("Codificación de caracteres: " + this.encoding);
 	}
 
 	// getters y setters
-	
+
 	public String getCadena() {
 		return cadena;
 	}
