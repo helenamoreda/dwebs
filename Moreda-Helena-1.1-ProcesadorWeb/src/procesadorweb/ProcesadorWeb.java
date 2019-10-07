@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class ProcesadorWeb {
-	private String cadena, tipoContenido;
+	private String cadena, tipoContenido, encoding;
 	private URL url;
 	private InetAddress address;
 	private URLConnection urlConexion;
@@ -28,6 +28,7 @@ public class ProcesadorWeb {
 		etiquetas.put("<table", 0);
 		this.tipoContenido = "";
 		this.cadena = "";
+		this.encoding = "";
 	}
 
 	public void pedirDatos() {
@@ -43,22 +44,26 @@ public class ProcesadorWeb {
 			this.address = InetAddress.getByName(this.url.getHost());
 			this.urlConexion = url.openConnection();
 			this.tipoContenido = this.urlConexion.getContentType().split(";")[0];
+			if (this.urlConexion.getContentType().split(";").length > 1) {
+				this.encoding = this.urlConexion.getContentType().split(";")[1];
+			}
 
 			this.visualizarDatos();
 
-			// Buscamos las etiquetas solo en el caso de ser una página HTML 
+			// Buscamos las etiquetas solo en el caso de ser una página HTML
 			if (tipoContenido.equals("text/html")) {
 				InputStream inputstream = urlConexion.getInputStream();
 				BufferedReader input = new BufferedReader(new InputStreamReader(inputstream));
-
 				String line;
 				// Recorro línea a línea el contenido HTML de la url
 				while ((line = input.readLine()) != null) {
 					// Recorro el map de todas las etiquetas para buscar coincidencias en la línea
 					for (Map.Entry<String, Integer> entry : etiquetas.entrySet()) {
-						// Genero un array donde cada posición incluye la etiqueta (usando expresión regular) que estamos recorriendo en caso de coincidencia
-						String[] array = line.split("(?<="+entry.getKey()+")");
-						// Recorremos el array anterior para ver si cada posición contiene la etiqueta que estamos recorriendo
+						// Genero un array donde cada posición incluye la etiqueta (usando expresión
+						// regular) que estamos recorriendo en caso de coincidencia
+						String[] array = line.split("(?<=" + entry.getKey() + ")");
+						// Recorremos el array anterior para ver si cada posición contiene la etiqueta
+						// que estamos recorriendo
 						for (String linea : array) {
 							if (linea.contains(entry.getKey())) {
 								// Si la etiqueta está incluida sumamos uno al contador
@@ -73,7 +78,7 @@ public class ProcesadorWeb {
 				// Pintamos el resultado
 				this.visualizarDatosContenido();
 			}
-
+			// excepción en caso de url mal formada
 		} catch (MalformedURLException e) {
 			System.out.println("Dirección no válida");
 		} catch (IOException e) {
@@ -89,19 +94,15 @@ public class ProcesadorWeb {
 	}
 
 	public void visualizarDatos() {
+		System.out.println(this.urlConexion.getContentType());
 		System.out.println("Dirección URL: " + this.url.toString());
 		System.out.println("Dirección IP: " + this.address.getHostAddress());
 		System.out.println("Puerto: " + this.url.getDefaultPort());
 		System.out.println("Tipo de contenido: " + this.tipoContenido);
-		System.out.println("Codificación de caracteres:" + this.urlConexion.getContentType().split(";")[1]);
-	}
-	
-	public static void main(String[] args) {
-		ProcesadorWeb pw = new ProcesadorWeb();
-		pw.pedirDatos();
-		pw.analizar();
+		System.out.println("Codificación de caracteres:" + this.encoding);
 	}
 
+	// getters y setters
 	public String getCadena() {
 		return cadena;
 	}
