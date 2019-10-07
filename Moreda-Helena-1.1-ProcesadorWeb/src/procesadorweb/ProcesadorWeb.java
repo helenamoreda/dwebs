@@ -27,9 +27,9 @@ public class ProcesadorWeb {
 		etiquetas.put("<ul", 0);
 		etiquetas.put("<ol", 0);
 		etiquetas.put("<table", 0);
-		this.tipoContenido = "";
+		this.tipoContenido = "Valor no encontrado";
 		this.cadena = "";
-		this.encoding = "";
+		this.encoding = "Valor no encontrado";
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class ProcesadorWeb {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Por favor, introduzca url/uri a analizar: ");
 		this.cadena = sc.nextLine();
-		// Si no incluye el protocolo, se lo añadimos
+		// si la url no comienza por http, se lo añadimos
 		if (!cadena.startsWith("http")) {
 			this.cadena = "http://" + cadena;
 		}
@@ -54,10 +54,10 @@ public class ProcesadorWeb {
 			this.url = new URL(this.cadena);
 			this.address = InetAddress.getByName(this.url.getHost());
 			this.urlConexion = url.openConnection();
-			this.tipoContenido = this.urlConexion.getContentType().split(";")[0];
-			
-			// si la url no comienza por http, se lo añadimos
-			if (this.urlConexion.getContentType().split(";").length > 1) {
+
+			// Guardamos el content type y encoding solo si viene especificado
+			if (this.urlConexion.getContentType() != null && this.urlConexion.getContentType().split(";").length > 1) {
+				this.tipoContenido = this.urlConexion.getContentType().split(";")[0];
 				this.encoding = this.urlConexion.getContentType().split(";")[1].split("charset=")[1];
 			}
 
@@ -91,7 +91,7 @@ public class ProcesadorWeb {
 				// Pintamos el resultado
 				this.visualizarDatosContenido();
 			}
-			// excepción en caso de url mal formada
+		// excepción en caso de url mal formada
 		} catch (MalformedURLException e) {
 			System.out.println("Dirección no válida");
 		} catch (FileNotFoundException e) {
