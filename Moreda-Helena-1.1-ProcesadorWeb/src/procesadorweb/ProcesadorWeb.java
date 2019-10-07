@@ -31,6 +31,9 @@ public class ProcesadorWeb {
 		this.encoding = "";
 	}
 
+	/**
+	 * método para pedir datos de entrada
+	 */
 	public void pedirDatos() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Por favor, introduzca url/uri a analizar: ");
@@ -38,6 +41,9 @@ public class ProcesadorWeb {
 		sc.close();
 	}
 
+	/**
+	 * método para analizar la url
+	 */
 	public void analizar() {
 		try {
 			this.url = new URL(this.cadena);
@@ -94,7 +100,6 @@ public class ProcesadorWeb {
 	}
 
 	public void visualizarDatos() {
-		System.out.println(this.urlConexion.getContentType());
 		System.out.println("Dirección URL: " + this.url.toString());
 		System.out.println("Dirección IP: " + this.address.getHostAddress());
 		System.out.println("Puerto: " + this.url.getDefaultPort());
@@ -103,6 +108,7 @@ public class ProcesadorWeb {
 	}
 
 	// getters y setters
+	
 	public String getCadena() {
 		return cadena;
 	}
