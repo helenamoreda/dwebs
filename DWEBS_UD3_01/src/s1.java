@@ -30,12 +30,18 @@ public class s1 extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		LocalDateTime fecha = LocalDateTime.now();
+		String app = this.getServletContext().getInitParameter("appName");
+		String pass = this.getServletContext().getInitParameter("username");
+		
 		// cambiar el tipo de contenido del mensaje http
 		response.setContentType(Utilities.CONTENT_TYPE);
+		
 		PrintWriter out = response.getWriter();
-		out.println(Utilities.headWithTitle("Prueba") + "<body>HOLA, ");
-		LocalDateTime fecha = LocalDateTime.now();
-		out.println("Son las "+fecha.getHour()+":"+fecha.getMinute()+":"+fecha.getSecond()+"</body></html>");
+		out.println(Utilities.headWithTitle("Prueba") + "<html><body>");
+		out.println("Son las "+fecha.getHour()+":"+fecha.getMinute()+":"+fecha.getSecond());
+		out.println("<br/>Bienvenido a " + app + ", Soy username y he entrado con password: " + pass);
+		out.println("</body></html>");
 	}
 
 	/**
