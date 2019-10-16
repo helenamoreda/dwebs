@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Serv extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String cabecera = "<html><head></head><body><table style='border=solid 1px'>";
-	private static final String footer = "</table> </body></html>";
+	private static final String footer = "</table></body></html>";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
