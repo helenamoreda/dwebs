@@ -31,10 +31,13 @@ public class Serv extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String tabla = "";
+		//pintamos las filas
 		for (int f = 1; f <= 8; f++) {
 			tabla += "<tr>";
+			//pintamos las columnas
 			for (int c = 1; c <= 8; c++) {
 				int numero = (int)(Math.random()*(12-23+1)+23);
+				//si la fila y celda son pares/impares, ponemos el fondo gris
 				if ((f%2==0 && c%2==0) || (f%2!=0 && c%2!=0)) {
 					tabla+="<td style='"+color+"border:1px solid;width:30px;height:30px;'>&#98"+numero+";</td>";
 				} else {
