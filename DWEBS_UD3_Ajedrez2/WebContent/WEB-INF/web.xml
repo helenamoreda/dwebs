@@ -1,24 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< d7c80dea867e655c0ae16065b694ca45f180932e
   <display-name>DWEBS_UD3_Ajedrez2</display-name>
   <welcome-file-list>
-=======
-  <display-name>DWEBS_UD3_Ajedrez</display-name>
-  <welcome-file-list>
-    <welcome-file>ajedrez</welcome-file>
->>>>>>> cambio de nombre
-=======
-  <display-name>DWEBS_UD3_Ajedrez</display-name>
-  <welcome-file-list>
-    <welcome-file>ajedrez</welcome-file>
->>>>>>> master
-=======
-  <display-name>DWEBS_UD3_Ajedrez2</display-name>
-  <welcome-file-list>
->>>>>>> parent of ff6563e... cambio de nombre
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
     <welcome-file>index.jsp</welcome-file>
@@ -30,20 +13,4 @@
     <servlet-name>Serv</servlet-name>
     <servlet-class>servlet.Serv</servlet-class>
   </servlet>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< d7c80dea867e655c0ae16065b694ca45f180932e
-=======
-=======
->>>>>>> master
-  <servlet-mapping>
-    <servlet-name>Serv</servlet-name>
-    <url-pattern>/ajedrez</url-pattern>
-  </servlet-mapping>
-<<<<<<< HEAD
->>>>>>> cambio de nombre
-=======
->>>>>>> master
-=======
->>>>>>> parent of ff6563e... cambio de nombre
 </web-app>
