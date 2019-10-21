@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "Serv", urlPatterns = { "/ajedrez", "/index" })
 public class Serv extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String cabecera = "<html><head></head><body><table style='border=solid 1px'>";
-	private static final String footer = "</table> </body></html>";
-
+	private static final String cabecera = "<html><head></head><body><table style='border:solid 1px'>";
+	private static final String footer = "</table></body></html>";
+	private static final String color = "bgcolor:silver";
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -30,13 +30,12 @@ public class Serv extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		double numero = Math.random()*23 + 17;
-		
 		String tabla = "";
-		for (int f=1;f<=8;f++) {
+		for (int f = 1; f <= 8; f++) {
 			tabla += "<tr>";
-			for (int c=1;c<=8;c++) {
-				tabla += "<td style='border=solid 1px'>&#98"+numero+";</td>";
+			for (int c = 1; c <= 8; c++) {
+				int numero = (int)(Math.random()*(17-23+1)+23);
+				tabla += "<td style='border:1px solid;width:24pt;height:24pt;'>&#98"+numero+";</td>";
 			}
 			tabla += "</tr>";
 		}
