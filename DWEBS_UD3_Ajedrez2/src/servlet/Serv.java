@@ -15,7 +15,7 @@ public class Serv extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String cabecera = "<html><head></head><body><table style='border:solid 1px'>";
 	private static final String footer = "</table></body></html>";
-	private static final String color = "bgcolor:silver";
+	private static final String color = "background-color:silver;";
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -35,7 +35,11 @@ public class Serv extends HttpServlet {
 			tabla += "<tr>";
 			for (int c = 1; c <= 8; c++) {
 				int numero = (int)(Math.random()*(17-23+1)+23);
-				tabla += "<td style='border:1px solid;width:24pt;height:24pt;'>&#98"+numero+";</td>";
+				if ((f%2==0 && c%2==0) || (f%2!=0 && c%2!=0)) {
+					tabla+="<td style='"+color+"border:1px solid;width:24pt;height:24pt;'>&#98"+numero+";</td>";
+				} else {
+					tabla+="<td style='border:1px solid;width:24pt;height:24pt;'>&#98"+numero+";</td>";
+				}
 			}
 			tabla += "</tr>";
 		}
@@ -51,5 +55,4 @@ public class Serv extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }
