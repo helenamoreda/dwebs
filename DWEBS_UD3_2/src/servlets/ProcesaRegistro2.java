@@ -48,9 +48,8 @@ public class ProcesaRegistro2 extends HttpServlet {
 
 		while (nombres.hasMoreElements()) {
 			String elemento = nombres.nextElement();
-			
+
 			if (request.getParameter(elemento) != null) {
-				
 				if (!elemento.equals("departamentos") && !elemento.equals("lenguajes")) {
 					response.getWriter().append("<li>" + elemento + ": " + request.getParameter(elemento) + "</li>");
 				}
