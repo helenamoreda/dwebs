@@ -44,6 +44,9 @@ public class buscador extends HttpServlet {
 			case "yahoo":
 				response.sendRedirect("https://es.search.yahoo.com/search?p=" + cad);
 				break;
+			case "googleI":
+				response.sendRedirect("https://www.google.com/images?q=" + cad);
+				break;
 			default:
 				response.sendRedirect("https://www.google.com/search?q=" + cad);
 				break;
