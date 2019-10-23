@@ -49,26 +49,20 @@ public class ProcesaRegistro2 extends HttpServlet {
 		while (nombres.hasMoreElements()) {
 			String elemento = nombres.nextElement();
 			
-			if (request.getParameter(elemento) != null && !elemento.equals("departamentos") && !elemento.equals("lenguajes")) {
-				response.getWriter().append("<li>" + elemento + ": " + request.getParameter(elemento) + "</li>");
-			}
-			
-			if (elemento.equals("departamentos")) {
-				String[] depar = request.getParameterValues("departamentos");
-				response.getWriter().append("<li>"+elemento+ ": ");
-				for (String it : depar) {
-					response.getWriter().append(it+", ");
+			if (request.getParameter(elemento) != null) {
+				
+				if (!elemento.equals("departamentos") && !elemento.equals("lenguajes")) {
+					response.getWriter().append("<li>" + elemento + ": " + request.getParameter(elemento) + "</li>");
 				}
-				response.getWriter().append("</li>");
-			}
-			
-			if (elemento.equals("lenguajes")) {
-				String[] leng = request.getParameterValues("lenguajes");
-				response.getWriter().append("<li>"+elemento+ ": ");
-				for (String it : leng) {
-					response.getWriter().append(it+", ");
+
+				if (elemento.equals("departamentos") || elemento.equals("lenguajes")) {
+					String[] obj = request.getParameterValues(elemento);
+					response.getWriter().append("<li>" + elemento + ": ");
+					for (String it : obj) {
+						response.getWriter().append(it + ", ");
+					}
+					response.getWriter().append("</li>");
 				}
-				response.getWriter().append("</li>");
 			}
 		}
 		response.getWriter().append("</ul></body></html>");
