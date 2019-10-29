@@ -60,14 +60,12 @@ public class MostrarSesion extends HttpServlet {
 		}
 
 		response.getWriter().append("<h2>Información de la sesión</h2>");
-		response.getWriter().append(
-				"<table style='border: 1px solid;border-collapse:collapse'><thead><tr><td>Información</td><td>Valor</td></tr></thead><tbody>");
+		response.getWriter().append("<table><thead><tr><td>Información</td><td>Valor</td></tr></thead><tbody>");
 		response.getWriter().append("<tr><td>IP cliente</td><td>" + request.getRemoteAddr() + "</td></tr>");
 		response.getWriter().append("<tr><td>Identificador de la sesión</td><td>" + sesion.getId() + "</td></tr>");
 		response.getWriter().append("<tr><td>Fecha Creación</td><td>" + fechaCreacion + "</td></tr>");
 		response.getWriter().append("<tr><td>Fecha del último acceso</td><td>" + fechaLastSesion + "</td></tr>");
-		response.getWriter()
-				.append("<tr><td>Número de accesos previos</td><td>" + sesion.getAttribute("accesos") + "</td></tr>");
+		response.getWriter().append("<tr><td>Número de accesos previos</td><td>" + sesion.getAttribute("accesos") + "</td></tr>");
 		response.getWriter().append("</tbody></table></tbody></html>");
 	}
 }
