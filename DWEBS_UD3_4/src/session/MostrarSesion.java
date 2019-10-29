@@ -43,13 +43,13 @@ public class MostrarSesion extends HttpServlet {
 		// seteo las fechas para la tabla
 		fechaCreacion = new Date(sesion.getCreationTime());
 		fechaLastSesion = new Date(sesion.getLastAccessedTime());
-
 		response.setCharacterEncoding("utf-8");
 		response.getWriter().append(Utilities.headWithTitle("Control de Sesión"));
 
 		// 2. Compruebo si la sesion es nueva
 		if (sesion.isNew()) {
 			response.getWriter().append("<h1>Bienvenido a la sesión</h1>");
+			contador = 0;
 			sesion.setAttribute("accesos", contador);
 		} else {
 			response.getWriter().append("<h1>Bienvenido de nuevo</h1>");
@@ -61,7 +61,7 @@ public class MostrarSesion extends HttpServlet {
 
 		response.getWriter().append("<h2>Información de la sesión</h2>");
 		response.getWriter().append(
-				"<table style='border-collapse: collapse'><thead><tr><td>Información</td><td>Valor</td></tr></thead><tbody>");
+				"<table style='border: 1px solid;border-collapse:collapse'><thead><tr><td>Información</td><td>Valor</td></tr></thead><tbody>");
 		response.getWriter().append("<tr><td>IP cliente</td><td>" + request.getRemoteAddr() + "</td></tr>");
 		response.getWriter().append("<tr><td>Identificador de la sesión</td><td>" + sesion.getId() + "</td></tr>");
 		response.getWriter().append("<tr><td>Fecha Creación</td><td>" + fechaCreacion + "</td></tr>");
