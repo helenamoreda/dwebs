@@ -1,0 +1,116 @@
+* {
+		margin: 0 auto;
+		text-align: center;
+	}
+	
+body {
+		font-family: "Comic Sans M", Calibri;
+		font-size: 15pt;
+		font-weight: normal;
+		background-color: black;
+	}
+	
+div{
+	width: 800px;
+	border: purple 10px double;
+	background-color: white;
+}
+	h1{
+		width: 800px;
+		background-color: rgb(173, 64, 237);
+		color: white;
+		font-size: 30px;
+		padding-top: 15px;
+		padding-bottom: 15px;
+	}
+	legend{text-transform: uppercase; color: black; font-weight: bold;}
+	
+	/*Para las celdas*/
+	table{
+		border-spacing: 0px;
+		padding: 5px;
+	}
+	
+	th, td{
+		padding-left: 15px;
+		padding-right: 15px;
+		padding-bottom: 5px;
+		padding-top: 5px;
+		text-align: center;
+		
+	}
+	.formato1{
+		background-color: black;
+		color: white;
+	}
+	.formato2{
+		background-color: rgb(217, 169, 252);
+	}
+	input, select{
+		border: 2px black double;
+	}
+	
+	input:focus { border: 2px solid green;} 
+	/*Para los botones*/
+.button {
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  margin: 10px;
+  box-shadow: 0 9px #999;
+  }
+
+
+.button1{
+background-color: #ef5350;
+}
+.button2{
+background-color: #64b5f6;
+}
+.button3{
+background-color: #05e676;
+}
+.button4{
+background-color: #5d4017;
+}
+
+.button1:hover {
+  background-color: #d50000;
+  transform: translateY(4px);
+  }
+  
+  .button2:hover {
+  background-color: #0d47a1;
+  transform: translateY(4px);
+  }
+  
+  .button3:hover {
+  background-color: #00e853;
+  transform: translateY(4px);
+  }
+  
+  .button4:hover {
+  background-color: #3e2723;
+  transform: translateY(4px);
+  }
+  
+ .button:active {
+  background-color: white;
+  box-shadow: 0 5px #666;
+  transform: translateY(6px); 
+}
+
+.button5{
+	box-shadow: 0 0 30px black;
+	background-color: rgb(217, 169, 252);
+	border: purple 1px double;
+}
+
+button img {
+	width: 60px;
+	height: 60px;
+}

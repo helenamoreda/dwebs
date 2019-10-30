@@ -1,0 +1,107 @@
+﻿<!doctype html>
+<html>
+<head>
+	<title>SIMS</title>
+	<link rel="stylesheet" type="text/css" href="css/sims.css">
+</head>
+<body>
+	<div>
+		<h1> Pasa horas divertidas en ciudad SIMS</h1>
+		<br/>
+		<form action="sims">
+			<fieldset>
+				<legend>
+					<img src="img/notepad.png" alt="logo cuaderno" title="logo cuaderno" /> 
+					Primero tus datos personales:
+				</legend>
+				<table>
+					<tr>
+						<td class="formato1" ><label for="c1">Nombre: </label></td>
+						<td class="formato2" ><input type="text" id="c1" name="nombre" placeholder="Escribe aquí tu nombre" title="Escribe solo letras en minúsculas" pattern="{a-z}*" required /></td>
+						<td class="formato1"><label for="c2">Apellidos: </label></td>
+						<td class="formato2"><input type="text" id="c2" name="apellidos" placeholder="Escribe aquí tu apellido" title="Escribe solo letras en minúsculas" pattern="{a-z}*" required /></td>
+					</tr>
+					<tr>
+						<td class="formato1"><label for="c3">Edad: </label></td>
+						<td class="formato2"><input type="number" id="c3" name="edad" placeholder="0-99" title="Debes ser mayos de 12 años para inscribirte" min="12" max="99" required /></td>
+						<td class="formato1"><label for="c4">Ocupación: </label></td>
+						<td class="formato2">
+							<select id="c4" title="Elija una ocupación" name="ocupacion">
+								<option value="c41" selected >Estudiante</option>
+								<option value="c42">Empleado/a a tiempo completo</option>
+								<option value="c43">Empleado/a a tiempo parcial</option>
+								<option value="c44">Parado/a</option>
+								<option value="c45">Amo/a de casa</option>
+								<option value="c46">Autónomo</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+			<fieldset>
+				<legend>
+					<img src="img/sims.png" alt="logo SIMS" title="logo SIMS" /> 
+					Create un Sim
+				</legend>
+				<table>
+				<caption class="titulo"><p>Elige características de tu primer SIMS:<p></caption>
+					<tr>
+						<td class="formato1"><label for="s1">Nombre: </label></td>
+						<td class="formato1"><label for="s2">Apellidos: </label></td>
+						<td class="formato1"><label for="etapa">Etapa de la vida: </label></td>
+						<td class="formato1"><label for="s4">Corpulencia: </label></td>
+					</tr>
+					<tr>
+						<td class="formato2"><input type="text" id="s1" name="nombre_sims" placeholder="Escribe aquí nombre" title="Escribe solo letras en minúsculas" pattern="{a-z}*" required /></td>
+						<td class="formato2"><input type="text" id="s2" name="apellidos_sims" placeholder="Escriba aquí apellidos" title="Escribe solo letras en minúsculas" pattern="{a-z}*" required /></td>
+						<td class="formato2">
+							<select id="etapa" title="Elija una etapa de la vida" name="etapa">
+								<option value="s31" selected >Niñez</option>
+								<option value="s32">Adolescencia</option>
+								<option value="s33">Juventud</option>
+								<option value="s34">Madurez</option>
+								<option value="s35">Vejez</option>
+							</select>
+						</td>
+						<td class="formato2">
+							<select id="s4" title="Elija un tipo de cuerpo" name="cuerpo">
+								<option value="s41" selected >Atletico</option>
+								<option value="s42">Corpulento</option>
+								<option value="s43">Delgando</option>
+								<option value="s44">Musculoso</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" class="formato1"><label>Color de ojos (pulsa pero no se aplicará): </label></td>
+						<td colspan="2" class="formato1"><label>Color de pelo: </label></td>
+					</tr>
+					<tr>
+						<td class="formato2"><button type="button" class="button button1" id="rojo" title="Para las criaturas de la noche"> ROJO </button></td>
+						<td class="formato2"><button type="button" class="button button2" id="azul" title="Ojazos azules"> AZUL </button></td>
+						<td class="formato2"><input type="radio" id="s61" name="pelo" value="s61" title="Pelo rubio"/><label for="s61"><img src="img/rubio.png" alt="Pelo rubio" title="Elige a un Sims rubio"/></label></td>
+						<td class="formato2"><input type="radio" id="s62" name="pelo" value="s62" title="Pelo moreno"/><label for="s62"><img src="img/negro.png" alt="Pelo moreno" title="Elige a un Sims moreno"/></label></td>
+					</tr>
+					<tr>
+						<td class="formato2"><button type="button" class="button button3" id="verde" title="ojazos verdes"> VERDE </button></td>
+						<td class="formato2"><button type="button" class="button button4" id="marron" title="ojos normales"> MARRON </button></td>
+						<td class="formato2"><input type="radio" id="s63" name="pelo" value="s63" title="Pelo castaño"/><label for="s63"><img src="img/castanio.png" alt="Pelo castaño" title="Elige a un Sims castaño"/></label></td>
+						<td class="formato2"><input type="radio" id="s64" name="pelo" value="s64" title="Sin pelo"/><label for="s64"><img src="img/calvo.png" alt="Calvo" title="El `pelo esta sobrevalorado..."/></label></td>
+					</tr>
+					<tr>
+						<td colspan="4" class="formato1"><label>Características de personalidad: </label></td>
+					</tr>
+					<tr>
+						<td class="formato2"><input type="checkbox" id="s7" name="personalidad" value="divertido"/><label title="Sé el alma de la fiesta" for="s7">Divertido</label></td>
+						<td class="formato2"><input type="checkbox" id="s8" name="personalidad" value="creativo"/><label title="Los SIMS creativos suelen aprender mas deprisa y sus creaciones tienen mas valor" for="s8">Creativo</label></td>
+						<td class="formato2"><input type="checkbox" id="s9" name="personalidad" value="animal"/><label title="Estos SIMS son mas felices viviendo con un animal" for="s9">Animal</label></td>
+						<td class="formato2"><input type="checkbox" id="s10" name="personalidad" value="malvado"/><label title="Disfrutan haciendo bromas de mal gusto" for="s10">Malvado</label></td>
+					</tr>
+				</table>
+			</fieldset>
+			<button type="submit" class="button button5"><img src="img/mando.png" alt="logo game" title="¡¡A jugar!!" /></button>
+			<button type="reset" class="button button5"><img src="img/corazon_roto.png" alt="logo orrar" title="Borrar datos" /></button>
+		</form>
+	</div>
+</body>
+</html>
