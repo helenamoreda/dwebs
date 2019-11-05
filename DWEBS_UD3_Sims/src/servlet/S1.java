@@ -83,7 +83,7 @@ public class S1 extends HttpServlet {
 				PdfPCell nomParam = new PdfPCell(new Phrase(par));
 				nomParam.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table.addCell(nomParam);
-				PdfPCell valor = new PdfPCell(new Phrase(request.getParameter(par)));
+				PdfPCell valor = new PdfPCell(new Phrase(valueMapper(request.getParameter(par))));
 				valor.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table.addCell(valor);
 			}
@@ -96,4 +96,48 @@ public class S1 extends HttpServlet {
 		document.close();
 	}
 
+	public String valueMapper(String value) {
+		switch (value) {
+		case "c41":
+			return "Estudiante";
+		case "c42":
+			return "Empleado/a a tiempo completo";
+		case "c43":
+			return "Empleado/a a tiempo parcial";
+		case "c44":
+			return "Parado/a";
+		case "c45":
+			return "Amo/a de casa";
+		case "c46":
+			return "Autónomo";
+		case "s31":
+			return "Niñez";
+		case "s32":
+			return "Adolescencia";
+		case "s33":
+			return "Juventud";
+		case "s34":
+			return "Madurez";
+		case "s35":
+			return "Vejez";
+		case "s41":
+			return "Atletico";
+		case "s42":
+			return "Corpulento";
+		case "s43":
+			return "Delgado";
+		case "s44":
+			return "Musculoso";
+		case "s61":
+			return "Pelo rubio";
+		case "s62":
+			return "Pelo moreno";
+		case "s63":
+			return "Pelo castaño";
+		case "s64":
+			return "Sin pelo";
+		default:
+			return value;
+		}
+	}
 }
