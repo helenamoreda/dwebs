@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>AJAX Ejemplo</title>
+<script type="text/javascript">
+	// Función para obtener respuesta a partir de un action-request
+	//     - id: id del elemento donde se generará el resultado recibido
+	//     - action: Acción del servlet/script del servidor
+	function getResponse(id, action) {
+		// ** 1. Definir y concatenar parámetros de envío a partir de cada "id" definido en un elemento 
+		// (si hubiera parámetros de envío)
+		var URLparams = "numero=" + document.getElementById("numero").value;
+
+		// 2. Creación de objeto request
+		var xhttp = new XMLHttpRequest();
+
+		// 3. Definición del manejador cuando reciba el contenido asíncrono
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				// ** 4. Qué hacer cuando se reciba correctamente el this.responseText
+				var html = "<li>" + this.responseText + "</li>";
+				document.getElementById(id).innerHTML += html;
+			}
+		};
+		
+		// 5. Método de envío
+		xhttp.open("POST", action, true);
+		
+		// 6. Enviar petición
+		xhttp.setRequestHeader("Content-type",
+				"application/x-www-form-urlencoded");
+		xhttp.send(URLparams);
+	}
+</script>
+</head>
+<body>
+	<input type="number" id="numero" />
+	<button onclick="getResponse('response', 'adivinanumero')">
+		<img src="img/button.png" alt="button" />Jugar
+	</button>
+	<ul id="response">
+	
+	</ul>
+</body>
+</html>
