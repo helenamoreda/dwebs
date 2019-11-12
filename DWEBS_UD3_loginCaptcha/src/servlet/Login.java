@@ -39,17 +39,15 @@ public class Login extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		if (sesion.isNew()) {
 			sesion.setAttribute("key", generarKey());
-			try {
-				response.getWriter().append(generaCaptcha(sesion.getAttribute("key").toString()));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			response.getWriter().append(generaCaptcha(sesion.getAttribute("key").toString()));
 		} else {
 			if (request.getParameter("numero") != null
 					&& request.getParameter("numero").equals(sesion.getAttribute("key").toString())) {
-				response.getWriter().append("<p>Correcto!</p>");
+				response.getWriter().append("<p style='color:green'>Correcto!</p>");
+				response.getWriter().append(generaCaptcha(sesion.getAttribute("key").toString()));
 			} else {
-				response.getWriter().append("<p>Incorrecto!</p>");
+				response.getWriter().append("<p style='color:red'>Incorrecto!</p>");
+				response.getWriter().append(generaCaptcha(sesion.getAttribute("key").toString()));
 			}
 		}
 	}
@@ -88,7 +86,6 @@ public class Login extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 }
