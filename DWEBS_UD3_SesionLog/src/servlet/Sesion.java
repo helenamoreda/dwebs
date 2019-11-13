@@ -21,10 +21,9 @@ import com.itextpdf.text.DocumentException;
 @WebServlet("/Sesion")
 public class Sesion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static ArrayList<Date> historial;
 	private static final String fileNameHojaCalculo = "Historial.xls";
 	private static final SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
-	private static final SimpleDateFormat hora = new SimpleDateFormat("hh:mm");
+	private static final SimpleDateFormat hora = new SimpleDateFormat("hh:mm:ss");
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -42,10 +41,17 @@ public class Sesion extends HttpServlet {
 			throws ServletException, IOException {
 		// 1. Recupero la sesion del contexto de la conex
 		HttpSession sesion = request.getSession();
+		ArrayList<Date> historial;
 		if (sesion.isNew()) {
-			historial = new ArrayList<>();
+			historial = new ArrayList<Date>();
+			historial.add(new Date(sesion.getLastAccessedTime()));
+			sesion.setAttribute("historial", historial);
+		} else {
+			@SuppressWarnings("unchecked")
+			ArrayList<Date> histAux = (ArrayList<Date>) sesion.getAttribute("historial");
+			histAux.add(new Date(sesion.getLastAccessedTime()));
+			sesion.setAttribute("historial", histAux);
 		}
-		historial.add(new Date(sesion.getLastAccessedTime()));
 		try {
 			createXLS(response, sesion);
 		} catch (DocumentException e1) {
@@ -63,12 +69,14 @@ public class Sesion extends HttpServlet {
 	 */
 	public void createXLS(HttpServletResponse response, HttpSession sesion) throws DocumentException, IOException {
 		response.setContentType("application/xls");
-
 		response.setHeader("Content-Disposition", "filename=" + fileNameHojaCalculo);
 		PrintWriter out = response.getWriter();
 
+		@SuppressWarnings("unchecked")
+		ArrayList<Date> histAux = (ArrayList<Date>) sesion.getAttribute("historial");
+
 		out.println("Fecha último acceso\tHora último acceso");
-		for (Date d : historial) {
+		for (Date d : histAux) {
 			out.println(fecha.format(d) + "\t" + hora.format(d));
 		}
 	}
