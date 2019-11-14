@@ -36,13 +36,17 @@ public class Palabras extends HttpServlet {
 		HttpSession sesion = request.getSession();
 		ArrayList<String> histAux;
 		if (sesion.isNew()) {
+			// si la sesion es nueva, genero el array que contendrá las frases
 			sesion.setAttribute("historial", histAux = new ArrayList<String>());
 		} else {
+			// recupero el array de frases
 			histAux = (ArrayList<String>) sesion.getAttribute("historial");
+			// si llega el parámetro, lo añado al array
 			if (request.getParameter("frase") != null) {
 				histAux.add((String) request.getAttribute("frase"));
 			}
 		}
+		// hacemos los calculos para el informe
 		calcula(response, histAux, sesion);
 	}
 
