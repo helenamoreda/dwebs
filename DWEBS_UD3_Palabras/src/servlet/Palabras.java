@@ -2,6 +2,8 @@ package servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,43 +37,53 @@ public class Palabras extends HttpServlet {
 		ArrayList<String> histAux;
 		if (sesion.isNew()) {
 			sesion.setAttribute("historial", histAux = new ArrayList<String>());
-			sesion.setAttribute("numFrases", 0);
-			sesion.setAttribute("numPalabras", 0);
-			sesion.setAttribute("numVocales", 0);
 		} else {
 			histAux = (ArrayList<String>) sesion.getAttribute("historial");
 			if (request.getParameter("frase") != null) {
-				histAux.add((String)request.getAttribute("frase"));
+				histAux.add((String) request.getAttribute("frase"));
 			}
 		}
 		calcula(response, histAux, sesion);
 	}
 
 	private void calcula(HttpServletResponse response, ArrayList<String> histAux, HttpSession sesion) {
-		int numPalabras = (int)sesion.getAttribute("numPalabras");
-		int numVocales = (int)sesion.getAttribute("numVocales");
+		int numFrases = 0, numPalabras = 0, numVocales = 0, numCons = 0, numSymbol = 0;
 		for (String cad : histAux) {
 			// Si la frase no está vacía, añado una frase más al contador
 			if (!cad.isEmpty()) {
-				sesion.setAttribute("numFrases", (int)sesion.getAttribute("numFrases")+1);
+				numFrases++;
 			}
-			// Hago el split para ver cuántas palabras hay separadas por los espacios e incremento el contador
+			// Hago el split para ver cuántas palabras hay separadas por los espacios e
+			// incremento el contador
 			int palabras = cad.split(" ").length;
-			sesion.setAttribute("numPalabras", numPalabras+palabras);
-			
-			int vocales = cad.replaceAll("[AEIOUaeiou]", "").length();
-			sesion.setAttribute("numVocales", numVocales+vocales);
+			numPalabras += palabras;
+			// Creo el patron a buscar, 1 para vocales, 2 para consonantes, 3 para simbolos
+			Pattern pattern1 = Pattern.compile("[aeiouáéíóú]");
+			Pattern pattern2 = Pattern.compile("[^aeiouáéíóú\\w\\d]");
+			Pattern pattern3 = Pattern.compile("[\\W]");
+			// Aplico un matcher a la cadena usando el patron
+			Matcher m1 = pattern1.matcher(cad.toLowerCase().replaceAll(" ", ""));
+			Matcher m2 = pattern2.matcher(cad.toLowerCase().replaceAll(" ", ""));
+			Matcher m3 = pattern3.matcher(cad.toLowerCase().replaceAll(" ", ""));
+			// cada vez que el matcher encuentre una ocurrencia, sumo 1 al contador
+			while (m1.find()) {
+				numVocales++;
+			}
+			while (m2.find()) {
+				numCons++;
+			}
+			while (m3.find()) {
+				numSymbol++;
+			}
 		}
-
 		try {
-			response.getWriter().append("Número total de frases: " + (int)sesion.getAttribute("numFrases"));
-			response.getWriter().append("Número total de palabras: " + (int)sesion.getAttribute("numVocales"));
-			//response.getWriter().append("Número total de vocales: " + numVocales);
-			// response.getWriter().append("Número total de consonantes (incluido símbolo
-			// ñ): " + );
-			// response.getWriter().append("Número total de símbolos (no incluir espacios en
-			// blanco): " + );
-			// response.getWriter().append("Media de número de palabras por frase: " + );
+			int media = numPalabras / numFrases;
+			response.getWriter().append("Número total de frases: " + numFrases);
+			response.getWriter().append("Número total de palabras: " + numPalabras);
+			response.getWriter().append("Número total de vocales: " + numVocales);
+			response.getWriter().append("Número total de consonantes (incluido símbolo ñ): " + numCons);
+			response.getWriter().append("Número total de símbolos (no incluir espacios en blanco): " + numSymbol);
+			response.getWriter().append("Media de número de palabras por frase: " + media);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -85,5 +97,4 @@ public class Palabras extends HttpServlet {
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }
