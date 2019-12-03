@@ -38,12 +38,13 @@ public class Palabras extends HttpServlet {
 		if (sesion.isNew()) {
 			// si la sesion es nueva, genero el array que contendrá las frases
 			sesion.setAttribute("historial", histAux = new ArrayList<String>());
+			histAux.add((String) request.getParameter("fraseParametro"));
 		} else {
 			// recupero el array de frases
 			histAux = (ArrayList<String>) sesion.getAttribute("historial");
 			// si llega el parámetro, lo añado al array
-			if (request.getParameter("frase") != null) {
-				histAux.add((String) request.getAttribute("frase"));
+			if (request.getParameter("fraseParametro") != null) {
+				histAux.add((String) request.getParameter("fraseParametro"));
 			}
 		}
 		// hacemos los calculos para el informe
@@ -64,7 +65,7 @@ public class Palabras extends HttpServlet {
 			// Creo el patron a buscar, 1 para vocales, 2 para consonantes, 3 para simbolos
 			Pattern pattern1 = Pattern.compile("[aeiouáéíóú]");
 			Pattern pattern2 = Pattern.compile("[^aeiouáéíóú\\w\\d]");
-			Pattern pattern3 = Pattern.compile("[\\W]");
+			Pattern pattern3 = Pattern.compile("[/\\W+/g]");
 			// Aplico un matcher a la cadena usando el patron
 			Matcher m1 = pattern1.matcher(cad.toLowerCase().replaceAll(" ", ""));
 			Matcher m2 = pattern2.matcher(cad.toLowerCase().replaceAll(" ", ""));
@@ -82,12 +83,12 @@ public class Palabras extends HttpServlet {
 		}
 		try {
 			int media = numPalabras / numFrases;
-			response.getWriter().append("Número total de frases: " + numFrases);
-			response.getWriter().append("Número total de palabras: " + numPalabras);
-			response.getWriter().append("Número total de vocales: " + numVocales);
-			response.getWriter().append("Número total de consonantes (incluido símbolo ñ): " + numCons);
-			response.getWriter().append("Número total de símbolos (no incluir espacios en blanco): " + numSymbol);
-			response.getWriter().append("Media de número de palabras por frase: " + media);
+			response.getWriter().append("Número total de frases: " + numFrases + "\n");
+			response.getWriter().append("Número total de palabras: " + numPalabras+ "\n");
+			response.getWriter().append("Número total de vocales: " + numVocales+ "\n");
+			response.getWriter().append("Número total de consonantes (incluido símbolo ñ): " + numCons+ "\n");
+			response.getWriter().append("Número total de símbolos (no incluir espacios en blanco): " + numSymbol+ "\n");
+			response.getWriter().append("Media de número de palabras por frase: " + media+ "\n");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
