@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Urna</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+
+<body>
+    <div id="urna"></div>
+
+    <button>+</button>
+    <button>-</button>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // 2. Creación de objeto request
+            var xhttp = new XMLHttpRequest();
+
+            // 3. Definición del manejador cuando reciba el contenido asíncrono
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    // ** 4. Qué hacer cuando se reciba correctamente el this.responseText
+                    let num1 = this.responseText.split(",")[0];
+                    let num2 = this.responseText.split(",")[1];
+                    generaUrna(num1, num2);
+                }
+            };
+
+            // 5. Método de envío
+            xhttp.open("POST", "urna", true);
+
+            // 6. Envíar petición
+            xhttp.setRequestHeader("Content-type",
+                "application/x-www-form-urlencoded");
+            xhttp.send();
+        });
+
+        function generaUrna(nrojas, nnegras) {
+            var rojas = nrojas, negras = nnegras;
+
+            while (rojas > 0 || negras > 0) {
+                if (Math.floor(Math.random() * 2) == 0) {
+                    if (rojas > 0) {
+                        document.getElementById("urna").innerHTML += "<div class=\"bola roja\"></div>";
+                        rojas--;
+                    }
+                }
+                else {
+                    if (negras > 0) {
+                        document.getElementById("urna").innerHTML += "<div class=\"bola negra\"></div>";
+                        negras--;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

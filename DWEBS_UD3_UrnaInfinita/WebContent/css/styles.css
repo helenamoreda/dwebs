@@ -1,0 +1,46 @@
+* {
+	margin: 0 auto;
+	text-align: center;
+}
+
+body {
+	margin-top: 20px;            
+}
+
+#urna {
+	width: 300px;
+	padding: 20px;
+	margin-bottom: 10px;
+	border-color: #00f;
+	border-style: solid;
+	border-top-width: 0px;
+	border-left-width: 5px;
+	border-right-width: 5px;
+	border-bottom-width: 5px;
+	border-bottom-left-radius: 100px;
+	border-bottom-right-radius: 100px;
+}
+
+.bola {
+	width: 20px;
+	height: 20px;
+	border-radius: 100%;
+	display:inline-block;
+	margin-left: 2px;
+	margin-right: 2px;
+	box-shadow: 0 1px 4px #7f7f7f;
+}
+
+.roja {
+	background: #f00;
+	background: radial-gradient(circle at 12px 12px, #f00, #000);
+}
+
+.negra {
+	background: #000;
+	background: radial-gradient(circle at 12px 12px, #4a4a4a, #000);
+}
+
+button {
+	width: 30px;
+}
