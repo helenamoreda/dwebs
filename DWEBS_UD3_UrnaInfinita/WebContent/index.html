@@ -2,30 +2,50 @@
 <html>
 
 <head>
-    <title>Urna</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+<title>Urna</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+<style>
+#estadistica {
+	border: 1px solid;
+	width: 30%;
+	margin: 0 auto;
+	text-align: justify;
+}
+</style>
 </head>
 
 <body>
-    <div id="urna"></div>
+	<div id="urna"></div>
 
-    <button>+</button>
-    <button>-</button>
+	<button>+</button>
+	<button>-</button>
+	<div id="estadistica"></div>
 
-    <script>
-
+	<script>
         document.addEventListener("DOMContentLoaded", () => {
-            // 2. Creación de objeto request
-            var xhttp = new XMLHttpRequest();
+            llamaServlet("generaUrna");
+            document.querySelectorAll("button")[0].addEventListener("click", ()=>{
+            	llamaServlet("suma");
+            });
+            document.querySelectorAll("button")[1].addEventListener("click", ()=>{
+            	llamaServlet("resta");
+            });
+        });
 
-            // 3. Definición del manejador cuando reciba el contenido asíncrono
+        function llamaServlet(opcion) {
+            var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    // ** 4. Qué hacer cuando se reciba correctamente el this.responseText
-                    let num1 = this.responseText.split(",")[0];
-                    let num2 = this.responseText.split(",")[1];
-                    generaUrna(num1, num2);
+                    let brojas = Number(this.responseText.split(",")[0]);
+                    let bnegras = Number(this.responseText.split(",")[1]);
+                    generaUrna(brojas, bnegras);
+                    document.querySelector("#estadistica").innerHTML = "";
+                    document.querySelector("#estadistica").innerHTML+="TOTAL BOLAS: "+(brojas+bnegras)+"<br>";
+                    document.querySelector("#estadistica").innerHTML+="TOTAL BOLAS ROJAS: "+brojas+"<br>";
+                    document.querySelector("#estadistica").innerHTML+="TOTAL BOLAS NEGRAS: "+bnegras+"<br>";
+                    document.querySelector("#estadistica").innerHTML+="PROBABILIDAD SACAR ROJA (%): "+Math.round(brojas/(brojas+bnegras)*100)+"%<br>";
+                    document.querySelector("#estadistica").innerHTML+="PROBABILIDAD SACAR NEGRA (%): "+Math.round(bnegras/(brojas+bnegras)*100)+"%<br>";
                 }
             };
 
@@ -35,12 +55,12 @@
             // 6. Envíar petición
             xhttp.setRequestHeader("Content-type",
                 "application/x-www-form-urlencoded");
-            xhttp.send();
-        });
+                xhttp.send("opcion="+opcion);
+        }
 
         function generaUrna(nrojas, nnegras) {
             var rojas = nrojas, negras = nnegras;
-
+            document.getElementById("urna").innerHTML  = "";
             while (rojas > 0 || negras > 0) {
                 if (Math.floor(Math.random() * 2) == 0) {
                     if (rojas > 0) {

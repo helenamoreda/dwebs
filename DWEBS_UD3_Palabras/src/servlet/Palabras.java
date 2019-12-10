@@ -64,8 +64,8 @@ public class Palabras extends HttpServlet {
 			numPalabras += palabras;
 			// Creo el patron a buscar, 1 para vocales, 2 para consonantes, 3 para simbolos
 			Pattern pattern1 = Pattern.compile("[aeiouáéíóú]");
-			Pattern pattern2 = Pattern.compile("[^aeiouáéíóú\\w\\d]");
-			Pattern pattern3 = Pattern.compile("[/\\W+/g]");
+			Pattern pattern2 = Pattern.compile("[a-z&&[^aeiouáéíóú]&&[^0-9]]");
+			Pattern pattern3 = Pattern.compile("[^a-z&&[^aeiouáéíóú]&&[^0-9]]");
 			// Aplico un matcher a la cadena usando el patron
 			Matcher m1 = pattern1.matcher(cad.toLowerCase().replaceAll(" ", ""));
 			Matcher m2 = pattern2.matcher(cad.toLowerCase().replaceAll(" ", ""));
@@ -84,11 +84,12 @@ public class Palabras extends HttpServlet {
 		try {
 			int media = numPalabras / numFrases;
 			response.getWriter().append("Número total de frases: " + numFrases + "\n");
-			response.getWriter().append("Número total de palabras: " + numPalabras+ "\n");
-			response.getWriter().append("Número total de vocales: " + numVocales+ "\n");
-			response.getWriter().append("Número total de consonantes (incluido símbolo ñ): " + numCons+ "\n");
-			response.getWriter().append("Número total de símbolos (no incluir espacios en blanco): " + numSymbol+ "\n");
-			response.getWriter().append("Media de número de palabras por frase: " + media+ "\n");
+			response.getWriter().append("Número total de palabras: " + numPalabras + "\n");
+			response.getWriter().append("Número total de vocales: " + numVocales + "\n");
+			response.getWriter().append("Número total de consonantes (incluido símbolo ñ): " + numCons + "\n");
+			response.getWriter()
+					.append("Número total de símbolos (no incluir espacios en blanco): " + numSymbol + "\n");
+			response.getWriter().append("Media de número de palabras por frase: " + media + "\n");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

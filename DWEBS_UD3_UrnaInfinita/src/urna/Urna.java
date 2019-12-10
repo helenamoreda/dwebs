@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class Urna
@@ -19,7 +20,6 @@ public class Urna extends HttpServlet {
 	 */
 	public Urna() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -28,10 +28,25 @@ public class Urna extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		UrnaBolas u = new UrnaBolas();
-		u.generaRojas();
-		u.generaNegras();
-		response.getWriter().append(u.cuentaRojas()).append("," + u.cuentaNegras());
+		HttpSession sesion = request.getSession();
+		if (sesion.isNew()) {
+			UrnaBolas u = new UrnaBolas();
+			u.generaRojas();
+			u.generaNegras();
+			sesion.setAttribute("urnaBolas", u);
+			response.getWriter().append(u.cuentaRojas()).append("," + u.cuentaNegras());
+		} else {
+			UrnaBolas urnaAux = (UrnaBolas) sesion.getAttribute("urnaBolas");
+			if (request.getParameter("opcion").equals("suma")) {
+				int num = (int) (Math.round(Math.random()));
+				urnaAux.getBolas().add(num);
+			} else if (request.getParameter("opcion").equals("resta")) {
+				int num = (int) (Math.random() * urnaAux.getBolas().size() + 1);
+				urnaAux.getBolas().remove(num);
+			}
+			sesion.setAttribute("urnaBolas", urnaAux);
+			response.getWriter().append(urnaAux.cuentaRojas()).append("," + urnaAux.cuentaNegras());
+		}
 	}
 
 	/**
