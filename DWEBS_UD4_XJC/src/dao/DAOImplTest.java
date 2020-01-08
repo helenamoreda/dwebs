@@ -10,7 +10,9 @@ import model.Libro;
 public class DAOImplTest {
 	public static void main(String[] args) {
 
-		Libro l = new Libro("2020-01-08", "El libro amarillo", "Espinosa");
+		Libro libro1 = new Libro("2020-01-08", "El libro amarillo", "Espinosa");
+		Libro libro2 = new Libro("2020-01-08", "El libro amarillo", "Espinosa");
+		Libro libro3 = new Libro("2020-01-08", "El libro amarillo", "Espinosa");
 		Properties p = new Properties();
 		try {
 			p.load(new FileReader("res/config.properties"));
@@ -22,7 +24,11 @@ public class DAOImplTest {
 			e.printStackTrace();
 		}
 		DAOImpl test = new DAOImpl(p);
-		test.insertar(l);
+		test.insertar(libro1);
+		
+		
+		
+		
 
 	}
 }
