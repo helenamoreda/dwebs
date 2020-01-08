@@ -27,7 +27,21 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "Libro")
 public class Libro {
 
-    @XmlElement(name = "Fecha", required = true)
+	@XmlElement(name = "id", required = true)
+    protected int id;
+    public int getId() {
+		return id;
+	}
+
+	public Libro() {
+		super();
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@XmlElement(name = "Fecha", required = true)
     protected String fecha;
     @XmlElement(name = "Titulo", required = true)
     protected String titulo;
@@ -46,7 +60,15 @@ public class Libro {
         return fecha;
     }
 
-    /**
+    public Libro(int id, String fecha, String titulo, String autor) {
+		super();
+		this.id = id;
+		this.fecha = fecha;
+		this.titulo = titulo;
+		this.autor = autor;
+	}
+
+	/**
      * Define el valor de la propiedad fecha.
      * 
      * @param value
@@ -70,7 +92,14 @@ public class Libro {
         return titulo;
     }
 
-    /**
+    public Libro(String fecha, String titulo, String autor) {
+		super();
+		this.fecha = fecha;
+		this.titulo = titulo;
+		this.autor = autor;
+	}
+
+	/**
      * Define el valor de la propiedad titulo.
      * 
      * @param value
