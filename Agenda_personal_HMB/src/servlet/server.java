@@ -59,12 +59,10 @@ public class server extends HttpServlet {
 				id = Integer.valueOf(request.getParameter("id"));
 				dao.eliminar(id);
 				break;
-			case "list":
-				dao.listarEmpleados();
-				break;
 			default:
 				break;
 			}
+			dao.listarEmpleados();
 		}
 	}
 
