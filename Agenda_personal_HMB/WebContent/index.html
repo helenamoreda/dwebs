@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Agenda</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <th>SELECCION</th>
+            <th>FOTO</th>
+            <th>NOMBRE Y APELLIDOS</th>
+            <th>CORREO ELECTRONICO</th>
+            <th>TELF. PERSONAL</th>
+            <th>TELF. MOVIL</th>
+            <th>EXT. CORPORATIVA</th>
+            <th>OPCIONES</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Editar</td>
+                <td>Eliminar</td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <br>
+
+    <form action="" method="get" class="form" role="form" autocomplete="off">
+        <div class="form-group row">
+            <label for="nombre" class="col-lg-3 col-form-label form-control-label">Nombre</label>
+            <div class="col-lg-3">
+                <input type="text" id="nombre" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="apellidos" class="col-lg-3 col-form-label form-control-label">Apellidos</label>
+            <div class="col-lg-3">
+                <input type="text" id="apellidos" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="email" class="col-lg-3 col-form-label form-control-label">Email</label>
+            <div class="col-lg-3">
+                <input type="email" name="" id="" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="movil" class="col-lg-3 col-form-label form-control-label">Teléfono Móvil</label>
+            <div class="col-lg-3">
+                <input type="number" id="movil" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="fijo" class="col-lg-3 col-form-label form-control-label">Teléfono Fijo</label>
+            <div class="col-lg-3">
+                <input type="number" id="fijo" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="dept" class="col-lg-3 col-form-label form-control-label">Extensión</label>
+            <div class="col-lg-3">
+                <select id="dept"></select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+        <button type="submit" class="btn btn-primary">Crear</button>
+    </form>
+</body>
+
+</html>

@@ -160,7 +160,7 @@ public class DAOImpl implements DAO {
 	public boolean actualizar(Empleado empleado) {
 		Connection c;
 		boolean valueReturn = false;
-		String sql = "UPDATE empleado SET titulo=?,autor=?,fecha=? WHERE autor=?";
+		String sql = "UPDATE empleado SET nombre=?, apellidos=?, telmovil=?, telfijo=?, extension=?, foto=?";
 
 		try {
 			c = this.conexion.conectar();
@@ -186,17 +186,15 @@ public class DAOImpl implements DAO {
 	}
 
 	@Override
-	public boolean eliminar(Empleado empleado) {
+	public boolean eliminar(int id) {
 		Connection c;
 		boolean valueReturn = false;
-		String sql = "DELETE FROM empleado WHERE titulo=? and autor=? and fecha=?";
+		String sql = "DELETE FROM empleado WHERE id=?";
 
 		try {
 			c = this.conexion.conectar();
 			PreparedStatement statement = c.prepareStatement(sql);
-			statement.setString(1, empleado.getTitulo());
-			statement.setString(2, empleado.getAutor());
-			statement.setString(3, empleado.getFecha());
+			statement.setInt(1, id);
 			// Valor de retorno
 			valueReturn = statement.executeUpdate() > 0;
 
