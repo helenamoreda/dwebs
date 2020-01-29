@@ -11,10 +11,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+    <script type="text/javascript" src="control.js"></script>
 </head>
 
 <body>
-    <table>
+    <table id="tabla">
         <thead>
             <th>SELECCION</th>
             <th>FOTO</th>
@@ -26,10 +27,6 @@
             <th>OPCIONES</th>
         </thead>
         <tbody>
-            <tr>
-                <td>Editar</td>
-                <td>Eliminar</td>
-            </tr>
         </tbody>
     </table>
     <br>
@@ -37,6 +34,7 @@
     <br>
 
     <form action="" method="get" class="form" role="form" autocomplete="off">
+        <input type="text" style="display: none" value="" id="idEmpleado">
         <div class="form-group row">
             <label for="nombre" class="col-lg-3 col-form-label form-control-label">Nombre</label>
             <div class="col-lg-3">
@@ -74,8 +72,11 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Actualizar</button>
-        <button type="submit" class="btn btn-primary">Crear</button>
+        <button type="submit" onclick="getResponse('tabla', 'server?opcion=create')"
+            class="btn btn-primary">Actualizar</button>
+        <button type="submit" onclick="getResponse('tabla', 'server?opcion=update')"
+            class="btn btn-primary">Crear</button>
     </form>
 </body>
+
 </html>

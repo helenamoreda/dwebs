@@ -81,10 +81,8 @@ public class server extends HttpServlet {
 			try {
 				p.load(new FileReader("res/config.properties"));
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
