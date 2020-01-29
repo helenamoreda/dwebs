@@ -6,17 +6,17 @@ document.addEventListener("load", ()=> {
 function listarEmpleados(response) {
     var table = document.getElementById("tabla");
     var tr = document.createElement('tr');
-
-    response.forEach(element => {
+    
+    for (const key in response) {
         var td = document.createElement('td');
         var tdOpciones = document.createElement('td');
-        var text = element.nombre;
+        var text = key.nombre;
         var textBorrar = "Borrar";
         tdOpciones.appendChild(textBorrar);
         td.appendChild(text);
         tr.appendChild(td);
         table.appendChild(tr);
-    });
+    }
 }
 
 function getResponse(id, action) {
@@ -30,25 +30,21 @@ function getResponse(id, action) {
         telfijo: document.getElementById("fijo").value,
         extension: document.getElementById("dept").value
     }
-    
     // 2. Creación de objeto request
     var xhttp = new XMLHttpRequest();
 
     // 3. Definición del manejador cuando reciba el contenido asíncrono
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this);
-            console.log('respuesta: ' + this.response);
-            console.log('for:');
-            this.response.forEach(element => {
-                console.log(element);
-            });
-            /*
-            var html = "<li>" + this.responseText + "</li>";
-            document.getElementById(id).innerHTML += html;*/
+            obj = JSON.parse(this.responseText);
+
+            for (let index = 0; index < obj.length; index++) {
+                const empleado = obj[index];
+            }
+
             if (action == "") {
                 empleado = null;
-                listarEmpleados(this.response);
+                listarEmpleados(obj);
             }
         }
     };
