@@ -30,7 +30,7 @@ public class DAOImpl implements DAO {
 	public boolean insertar(Empleado empleado) {
 		Connection c;
 		boolean valueReturn = false;
-		String sql = "INSERT INTO empleado (nombre, apellidos, telmovil, telfijo, extension, foto) VALUES (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO empleados (nombre, apellidos, telmovil, telfijo, extension, foto) VALUES (?, ?, ?, ?, ?, ?)";
 
 		try {
 			c = this.conexion.conectar();
@@ -59,7 +59,7 @@ public class DAOImpl implements DAO {
 	public List<Empleado> listarEmpleados() {
 		Connection c;
 		List<Empleado> listaEmpleados = new ArrayList<Empleado>();
-		String sql = "SELECT * FROM empleado";
+		String sql = "SELECT * FROM empleados";
 
 		try {
 			c = this.conexion.conectar();
@@ -95,7 +95,7 @@ public class DAOImpl implements DAO {
 	public Empleado obtenerPorId(int id) {
 		Connection c;
 		Empleado empleado = null;
-		String sql = "SELECT * FROM empleado WHERE id= ? ORDER BY id";
+		String sql = "SELECT * FROM empleados WHERE id= ? ORDER BY id";
 		boolean encontrado = false;
 
 		try {
@@ -125,7 +125,7 @@ public class DAOImpl implements DAO {
 	
 	public List<Empleado> empleadosPorDepartamento(int ext) {
 		Connection c;
-		String sql = "select * from empleado where extension = '" + ext + "'";
+		String sql = "select * from empleados where extension = '" + ext + "'";
 		List<Empleado> listaEmpleados = new ArrayList<Empleado>();
 
 		try {
@@ -160,7 +160,7 @@ public class DAOImpl implements DAO {
 	public boolean actualizar(Empleado empleado) {
 		Connection c;
 		boolean valueReturn = false;
-		String sql = "UPDATE empleado SET nombre=?, apellidos=?, telmovil=?, telfijo=?, extension=?, foto=?";
+		String sql = "UPDATE empleados SET nombre=?, apellidos=?, telmovil=?, telfijo=?, extension=?, foto=?";
 
 		try {
 			c = this.conexion.conectar();
@@ -189,7 +189,7 @@ public class DAOImpl implements DAO {
 	public boolean eliminar(int id) {
 		Connection c;
 		boolean valueReturn = false;
-		String sql = "DELETE FROM empleado WHERE id=?";
+		String sql = "DELETE FROM empleados WHERE id=?";
 
 		try {
 			c = this.conexion.conectar();

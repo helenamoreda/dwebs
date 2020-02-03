@@ -3,6 +3,8 @@ package servlet;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 import java.util.Properties;
 
 import javax.servlet.ServletException;
@@ -62,7 +64,9 @@ public class server extends HttpServlet {
 			default:
 				break;
 			}
-			dao.listarEmpleados();
+			
+			List<Empleado> lista = dao.listarEmpleados();
+			response.getWriter().println(gson.toJson(lista));
 		}
 	}
 
@@ -77,17 +81,23 @@ public class server extends HttpServlet {
 
 	private DAO getDAO(HttpSession sesion) {
 		if (sesion.isNew()) {
-			Properties p = new Properties();
+			/*Properties p = new Properties();
 			try {
 				p.load(new FileReader("res/config.properties"));
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
+			}*/
+			
+			String driver = "com.mysql.jdbc.Driver";
+			String url = "jdbc:mysql://localhost/";
+			String bd = "agenda_personal";
+			String username = "root";
+			String password = "";
 
 			// 2. Generar atributo en la sesi�n: objeto DAO dedicado a cada sesi�n
-			sesion.setAttribute("dao", new DAOImpl(p));
+			sesion.setAttribute("dao", new DAOImpl(driver, url, bd, username, password));
 		}
 		return (DAO) sesion.getAttribute("dao");
 	}

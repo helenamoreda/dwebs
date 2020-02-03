@@ -28,11 +28,11 @@ public class Conexion {
 	}
 
 	public Conexion(Properties props) {
-		this.driver = props.getProperty("driver");
-		this.url = props.getProperty("url");
-		this.bd = props.getProperty("bd");
-		this.username = props.getProperty("username");
-		this.password = props.getProperty("password");
+		this.driver = "com.mysql.jdbc.Driver";
+		this.url = "jdbc:mysql://localhost/";
+		this.bd = "agenda_personal";
+		this.username = "root";
+		this.password = "";
 	}
 
 	/**
