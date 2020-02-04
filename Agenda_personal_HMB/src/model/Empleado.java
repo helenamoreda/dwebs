@@ -2,11 +2,11 @@ package model;
 
 public class Empleado {
 private int id, telfijo, telmovil, extension;
-private String nombre, apellidos, foto;
+private String nombre, apellidos, foto, email;
 
 
 
-public Empleado(int telfijo, int telmovil, int extension, String nombre, String apellidos, String foto) {
+public Empleado(int telfijo, int telmovil, int extension, String nombre, String apellidos, String foto, String email) {
 	super();
 	this.telfijo = telfijo;
 	this.telmovil = telmovil;
@@ -14,11 +14,12 @@ public Empleado(int telfijo, int telmovil, int extension, String nombre, String 
 	this.nombre = nombre;
 	this.apellidos = apellidos;
 	this.foto = foto;
+	this.email = email;
 }
 
 
 
-public Empleado(int id, int telfijo, int telmovil, int extension, String nombre, String apellidos, String foto) {
+public Empleado(int id, int telfijo, int telmovil, int extension, String nombre, String apellidos, String foto, String email) {
 	super();
 	this.id = id;
 	this.telfijo = telfijo;
@@ -27,6 +28,19 @@ public Empleado(int id, int telfijo, int telmovil, int extension, String nombre,
 	this.nombre = nombre;
 	this.apellidos = apellidos;
 	this.foto = foto;
+	this.email = email;
+}
+
+
+
+public String getEmail() {
+	return email;
+}
+
+
+
+public void setEmail(String email) {
+	this.email = email;
 }
 
 

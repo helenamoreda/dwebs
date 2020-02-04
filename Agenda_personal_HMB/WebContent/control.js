@@ -1,6 +1,7 @@
 
 window.addEventListener("load", () => {
     getResponse(null, "/Agenda_personal_HMB/server?opcion=listar");
+    aniadirDept();
 });
 
 function getResponse(id, action) {
@@ -42,16 +43,73 @@ function getResponse(id, action) {
 
 function listarEmpleados(obj) {
     let table = document.getElementById("tabla");
-    let tr = document.createElement('tr');
-
+    
     for (const key in obj) {
-        let td = document.createElement('td');
+        let tr = document.createElement('tr');
+        let tdNombre = document.createElement('td');
+        let tdRadio = document.createElement('td');
+        let tdFoto = document.createElement('td');
+        let tdEmail = document.createElement('td');
+        let tdTelPer = document.createElement('td');
+        let tdTelMov = document.createElement('td');
+        let tdExt = document.createElement('td');
         let tdOpciones = document.createElement('td');
-        let textNombre = document.createTextNode(key.nombre);
-        let textBorrar = document.createTextNode("Borrar");
+
+        var radiob = document.createElement("INPUT");
+        radiob.setAttribute("type", "radio");
+        radiob.setAttribute("name", "seleccionado");
+        radiob.onclick = function() {
+            rellenarFormulario(obj[key]);
+        }
+        radiob.setAttribute("id", obj[key].id);
+        tdRadio.appendChild(radiob);
+        
+        let textNombre = document.createTextNode(obj[key].nombre +" "+ obj[key].apellidos);
+        tdNombre.appendChild(textNombre);
+        
+        let imgFoto = document.createElement("IMG");
+        imgFoto.src = obj[key].foto;
+        imgFoto.width = "40";
+        imgFoto.height = "40";
+        tdFoto.appendChild(imgFoto);
+
+        let textEmail = document.createTextNode(obj[key].email);
+        tdEmail.appendChild(textEmail);
+        
+        let textTelPer = document.createTextNode(obj[key].telfijo);
+        tdTelPer.appendChild(textTelPer);
+
+        let textTelMov = document.createTextNode(obj[key].telmovil);
+        tdTelMov.appendChild(textTelMov);
+
+        let textExt = document.createTextNode(obj[key].extension);
+        tdExt.appendChild(textExt);
+
+        let textBorrar = document.createElement("button");
+        textBorrar.setAttribute("id", "borrar");
+        textBorrar.onclick = function() {
+            getResponse(null, '/Agenda_personal_HMB/server?opcion=delete&id='+obj[key].id);
+        }
+        textBorrar.appendChild(document.createTextNode("Borrar"));
         tdOpciones.appendChild(textBorrar);
-        td.appendChild(textNombre);
-        tr.appendChild(td);
+        
+        tr.appendChild(tdRadio);
+        tr.appendChild(tdFoto);
+        tr.appendChild(tdNombre);
+        tr.appendChild(tdEmail);
+        tr.appendChild(tdTelPer);
+        tr.appendChild(tdTelMov);
+        tr.appendChild(tdExt);
+        tr.appendChild(tdOpciones);
         table.appendChild(tr);
+    }
+
+    function rellenarFormulario(obj) {
+        document.getElementById("nombre").value=obj.nombre;
+        document.getElementById("apellidos").value=obj.apellidos;
+        document.getElementById("email").value=obj.email;
+        document.getElementById("movil").value=obj.telmovil;
+        document.getElementById("fijo").value=obj.telfijo;
+        document.getElementById("dept").value=obj.extension;
     }
 }

@@ -1,11 +1,7 @@
 package servlet;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
-import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -99,6 +95,7 @@ public class server extends HttpServlet {
 			// 2. Generar atributo en la sesi�n: objeto DAO dedicado a cada sesi�n
 			sesion.setAttribute("dao", new DAOImpl(driver, url, bd, username, password));
 		}
-		return (DAO) sesion.getAttribute("dao");
+		DAO d = (DAO) sesion.getAttribute("dao");
+		return d;
 	}
 }

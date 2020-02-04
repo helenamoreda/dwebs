@@ -30,7 +30,7 @@ public class DAOImpl implements DAO {
 	public boolean insertar(Empleado empleado) {
 		Connection c;
 		boolean valueReturn = false;
-		String sql = "INSERT INTO empleados (nombre, apellidos, telmovil, telfijo, extension, foto) VALUES (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO empleados (nombre, apellidos, telmovil, telfijo, extension, foto, email) VALUES (?, ?, ?, ?, ?, ?)";
 
 		try {
 			c = this.conexion.conectar();
@@ -41,6 +41,7 @@ public class DAOImpl implements DAO {
 			statement.setInt(4, empleado.getTelfijo());
 			statement.setInt(5, empleado.getExtension());
 			statement.setString(6, empleado.getFoto());
+			statement.setString(7, empleado.getEmail());
 
 			// Valor de retorno
 			valueReturn = statement.executeUpdate() > 0;
@@ -59,7 +60,7 @@ public class DAOImpl implements DAO {
 	public List<Empleado> listarEmpleados() {
 		Connection c;
 		List<Empleado> listaEmpleados = new ArrayList<Empleado>();
-		String sql = "SELECT * FROM empleados";
+		String sql = "SELECT * FROM empleados INNER JOIN departamentos ON empleados.extension = departamentos.id";
 
 		try {
 			c = this.conexion.conectar();
@@ -71,13 +72,14 @@ public class DAOImpl implements DAO {
 				String nombre = resulSet.getString("nombre");
 				String apellidos = resulSet.getString("apellidos");
 				String foto = resulSet.getString("foto");
+				String email = resulSet.getString("email");
 				int telfijo = resulSet.getInt("telfijo");
 				int telmovil = resulSet.getInt("telmovil");
 				int extension = resulSet.getInt("extension");
 				int id = resulSet.getInt("id");
 
 				// Crear objeto Empleado
-				Empleado empleado = new Empleado(id, telfijo, telmovil, extension, nombre, apellidos, foto);
+				Empleado empleado = new Empleado(id, telfijo, telmovil, extension, nombre, apellidos, foto, email);
 
 				// Insertar objeto en colecci�n
 				listaEmpleados.add(empleado);
@@ -107,7 +109,7 @@ public class DAOImpl implements DAO {
 			if (res.next() && !encontrado) {
 				if (res.getInt("id") == id) {
 					empleado = new Empleado(res.getInt("id"), res.getInt("telfijo"), res.getInt("telmovil"),
-							res.getInt("extension"), res.getString("nombre"), res.getString("apellidos"), res.getString("foto"));
+							res.getInt("extension"), res.getString("nombre"), res.getString("apellidos"), res.getString("foto"), res.getString("email"));
 					encontrado = true;
 				}
 			}
@@ -138,12 +140,13 @@ public class DAOImpl implements DAO {
 				String nombre = resulSet.getString("nombre");
 				String apellidos = resulSet.getString("apellidos");
 				String foto = resulSet.getString("foto");
+				String email = resulSet.getString("email");
 				int telfijo = resulSet.getInt("telfijo");
 				int telmovil = resulSet.getInt("telmovil");
 				int extension = resulSet.getInt("extension");
 				int id = resulSet.getInt("id");
 				// Crear objeto Empleado
-				Empleado empleado = new Empleado(id, telfijo, telmovil, extension, nombre, apellidos, foto);
+				Empleado empleado = new Empleado(id, telfijo, telmovil, extension, nombre, apellidos, foto, email);
 
 				// Insertar objeto en colecci�n
 				listaEmpleados.add(empleado);
@@ -160,7 +163,7 @@ public class DAOImpl implements DAO {
 	public boolean actualizar(Empleado empleado) {
 		Connection c;
 		boolean valueReturn = false;
-		String sql = "UPDATE empleados SET nombre=?, apellidos=?, telmovil=?, telfijo=?, extension=?, foto=?";
+		String sql = "UPDATE empleados SET nombre=?, apellidos=?, telmovil=?, telfijo=?, extension=?, foto=?, email=?";
 
 		try {
 			c = this.conexion.conectar();
@@ -171,6 +174,7 @@ public class DAOImpl implements DAO {
 			statement.setInt(4, empleado.getTelfijo());
 			statement.setInt(5, empleado.getExtension());
 			statement.setString(6, empleado.getFoto());
+			statement.setString(7, empleado.getEmail());
 
 			// Valor de retorno
 			valueReturn = statement.executeUpdate() > 0;
