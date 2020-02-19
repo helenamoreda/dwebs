@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,10 +43,6 @@ public class Server extends HttpServlet {
 			throws ServletException, IOException {
 		String ciudad = request.getParameter("ciudad");
 
-		URLConnection connection = new URL(
-				"https://opendata.aemet.es/opendata/api/valores/climatologicos/inventarioestaciones/todasestaciones/?api_key="
-						+ APIKEY + "/api/prediccion/especifica/municipio/diaria/" + ciudad).openConnection();
-		
 		/*
 		 * https://www.el-tiempo.net/api/json/v1/provincias
 		 */
@@ -58,8 +56,6 @@ public class Server extends HttpServlet {
 		 */
 		URLConnection connectionTiempo = new URL("https://www.el-tiempo.net/api/json/v1/provincias/[CODPROV]/municipios/[ID]/weather").openConnection();
 		
-		connection.setRequestProperty("cache-control", "no-cache");
-		
 		InputStream is = connectionProvincias.getInputStream();
 		BufferedReader input = new BufferedReader(new InputStreamReader(is));
 
@@ -68,11 +64,33 @@ public class Server extends HttpServlet {
 		while ((line = input.readLine()) != null) {
 			sb.append(line);
 		}
-		Gson gson = new Gson();
-		gson.toJson(sb.toString());
-		JSONObject json = new JSONObject(sb.toString());
-		JSONArray jsonArray = new JSONArray(sb.getString("object"));
-		json.getString("CODPROV");
+		
+		JSONArray c = new JSONArray(sb.toString());
+		for (Object object : c) {
+			JSONObject json = (JSONObject) object;
+			if (json.getString("NOMBRE_PROVINCIA").equalsIgnoreCase("SEVILLA")) {
+				String codprovincia = json.getString("CODPROV");
+			}
+		}
+		JSONObject jsonObj = new JSONObject(sb.toString());
+		Map<String, Object> map = jsonObj.toMap();
+		
+
+//		for (int i = 0; i < jsonObj.length(); i++) {
+//		    JSONObject c = jsonObj.getJSONObject("dataArray");
+//
+//		    String A = c.getString("A");
+//		    String B = c.getString("B");
+//		    String C = c.getString("C");
+//
+//		}
+//		
+//		Gson gson = new Gson();
+//		gson.toJson(sb.toString());
+//		JSONObject json = new JSONObject(sb.toString());
+//		json.getString("CODPROV");
+//		
+		
 		// Cierre
 		is.close();
 		input.close();
