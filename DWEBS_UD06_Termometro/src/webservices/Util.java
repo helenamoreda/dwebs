@@ -41,17 +41,21 @@ public class Util {
 	public void buscaPronostico() throws MalformedURLException, IOException, ParseException {
 		URLConnection connectionTiempo = new URL("https://www.el-tiempo.net/api/json/v1/provincias/" + codProvincia
 				+ "/municipios/" + codMunicipio + "/weather").openConnection();
-
+		//https://www.el-tiempo.net/api/json/v1/provincias/41/municipios/41050/weather
 		result = conectar(connectionTiempo);
 		Map<String, String> jsonArray = new HashMap<>();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		JSONArray c = new JSONArray(result);
+		/*JSONArray c = new JSONArray(result);*/
+		JSONObject jsonobject = new JSONObject(result);
+		System.out.println(jsonobject.getString("prediccion"));
+
+		JSONArray c = new JSONArray(jsonobject.getString("prediccion"));
 		for (Object object : c) {
 			JSONObject prediccion = (JSONObject) object;
 			jsonArray.put("prediccion", prediccion.get("prediccion").toString());
 			JSONObject dia = new JSONObject(prediccion);
 			jsonArray.put("dia", dia.get("dia").toString());
-			Date date = format.parse("2009-12-31");
+			Date date1 = format.parse(dia.getString("fecha"));
 		}
 	}
 
