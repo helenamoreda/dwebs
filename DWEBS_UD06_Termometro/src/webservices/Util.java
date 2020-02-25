@@ -42,11 +42,11 @@ public class Util {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		
 		JSONObject jsonobject = new JSONObject(result);
-		System.out.println(jsonobject.getString("prediccion"));
 		
 		String pronostico = "";
-		JSONArray c = new JSONArray(jsonobject.getString("prediccion"));
-		for (Object object : c) {
+		JSONObject pre = new JSONObject(jsonobject.getJSONObject("prediccion"));
+		JSONArray dias = pre.getJSONArray("dia");
+		for (Object object : dias) {
 			JSONObject dia = (JSONObject) object;
 			Date date1 = format.parse(dia.getString("fecha"));
 			Date fechahoy = new Date();
