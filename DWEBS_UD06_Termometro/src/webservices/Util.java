@@ -45,6 +45,7 @@ public class Util {
 		
 		String pronostico = "";
 		JSONObject pre = new JSONObject(jsonobject.getJSONObject("prediccion"));
+		//objeto
 		JSONArray dias = pre.getJSONArray("dia");
 		for (Object object : dias) {
 			JSONObject dia = (JSONObject) object;
