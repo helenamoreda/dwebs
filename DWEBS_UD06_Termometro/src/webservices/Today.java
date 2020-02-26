@@ -19,14 +19,7 @@ public class Today {
 	public String mostrarCodigo(@PathParam("ciudad") String ciudad, @QueryParam("format") String format)
 			throws MalformedURLException, IOException, ParseException {
 		Util u = new Util();
-		String result = u.buscaProvincia(ciudad);
-		if (format.equals("json")) {
-
-		} else if (format.equals("xml")) {
-
-		} else {
-
-		}
+		String result = u.buscaProvincia(ciudad, "today", format);
 
 		return result;
 	}

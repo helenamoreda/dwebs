@@ -9,6 +9,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.json.JSONArray;
@@ -17,7 +18,8 @@ import org.json.JSONObject;
 public class Util {
 	private String codProvincia = "", codMunicipio = "", result;
 
-	public String buscaProvincia(String ciudad) throws MalformedURLException, IOException, ParseException {
+	public String buscaProvincia(String ciudad, String cuando, String format)
+			throws MalformedURLException, IOException, ParseException {
 		URLConnection connectionMunicipio = new URL("https://www.el-tiempo.net/api/json/v1/municipios")
 				.openConnection();
 
@@ -31,33 +33,75 @@ public class Util {
 				codMunicipio = json.getString("COD_GEO");
 			}
 		}
-		return buscaPronostico();
+		return buscaPronostico(cuando, format);
 	}
 
-	public String buscaPronostico() throws MalformedURLException, IOException, ParseException {
+	public String buscaPronostico(String cuando, String format)
+			throws MalformedURLException, IOException, ParseException {
 		URLConnection connectionTiempo = new URL("https://www.el-tiempo.net/api/json/v1/provincias/" + codProvincia
 				+ "/municipios/" + codMunicipio + "/weather").openConnection();
-		//https://www.el-tiempo.net/api/json/v1/provincias/41/municipios/41050/weather
+		
 		result = conectar(connectionTiempo);
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String pronostico = "";
+		SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
 		
 		JSONObject jsonobject = new JSONObject(result);
-		
-		String pronostico = "";
-		JSONObject pre = new JSONObject(jsonobject.getJSONObject("prediccion"));
-		//objeto
+		JSONObject pre = jsonobject.getJSONObject("prediccion");
 		JSONArray dias = pre.getJSONArray("dia");
-		for (Object object : dias) {
-			JSONObject dia = (JSONObject) object;
-			Date date1 = format.parse(dia.getString("fecha"));
-			Date fechahoy = new Date();
-			if (date1.equals(fechahoy)) {
-				pronostico =  "hola";
-			} else {
-				pronostico = "nada";
+
+		JSONObject diaHoy = (JSONObject) dias.get(0);
+		JSONObject diaManana = (JSONObject) dias.get(1);
+		String fechajsonHoy = diaHoy.getJSONObject("@attributes").getString("fecha");
+		String fechajsonMañana = diaHoy.getJSONObject("@attributes").getString("fecha");
+		Date fechahoy = new Date();
+		Date fechaMañana = sumarUnDia(fechahoy);
+		if (cuando.equals("today") && formatoFecha.format(fechahoy).equals(fechajsonHoy)) {
+			if (format.equals("json")) {
+				pronostico = getInfoJson(diaHoy);
+			} else if (format.equals("xml")) {
+				pronostico = getInfoXml(diaHoy);
 			}
+		} else if (cuando.equals("tomorrow") && formatoFecha.format(fechaMañana).equals(fechajsonMañana)) {
+			if (format.equals("json")) {
+				pronostico = getInfoJson(diaManana);
+			} else if (format.equals("xml")) {
+				pronostico = getInfoXml(diaManana);
+			}
+		} else {
+			pronostico = "no ha funcionado";
 		}
+
 		return pronostico;
+	}
+
+	private String getInfoXml(JSONObject dia) {
+		String maxima = dia.getJSONObject("temperatura").getString("maxima");
+		String minima = dia.getJSONObject("temperatura").getString("minima");
+		String sensacionMaxima = dia.getJSONObject("sens_termica").getString("minima");
+		String sensacionMinima = dia.getJSONObject("sens_termica").getString("minima");
+
+		return "<prediccion><temperatura_maxima>" + maxima + "</temperatura_maxima><temperatura_minima>" + minima
+				+ "</temperatura_minima><sensacion_termica_maxima>" + sensacionMaxima
+				+ "</sensacion_termica_maxima><sensacion_termica_minima>" + sensacionMinima
+				+ "</sensacion_termica_minima></prediccion>";
+	}
+
+	private String getInfoJson(JSONObject dia) {
+		String maxima = dia.getJSONObject("temperatura").getString("maxima");
+		String minima = dia.getJSONObject("temperatura").getString("minima");
+		String sensacionMaxima = dia.getJSONObject("sens_termica").getString("minima");
+		String sensacionMinima = dia.getJSONObject("sens_termica").getString("minima");
+
+		return "{ temperatura_maxima: " + maxima + ", temperatura_minima: " + minima + ", sensacion_termica_maxima: "
+				+ sensacionMaxima + ", sensacion_termica_minima: " + sensacionMinima + "}";
+	}
+
+	public Date sumarUnDia(Date hoy) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(hoy);
+		cal.add(Calendar.DATE, 1);
+		Date nuevaFecha = cal.getTime();
+		return nuevaFecha;
 	}
 
 	public String conectar(URLConnection url) throws IOException {
